@@ -1,3 +1,4 @@
+
 fetch("MOCK_DATA.csv")
   .then((res) => res.text())
   .then((text) => {
@@ -24,7 +25,7 @@ fetch("MOCK_DATA.csv")
         lat = "error";
       }
       let dates = date[i];
-      let intensities = intensity[i];
+      let intensities = Number(intensity[i]);
       if (intensities < 0 || intensities > 10) {
         intensities = "error";
       }
@@ -33,41 +34,9 @@ fetch("MOCK_DATA.csv")
       let temp = new NaturalDisaster(names, longt, latt, dates, intensities, types);
       naturalDisasterArray.push(temp);
     }
+    console.log(this);
     genTable(naturalDisasterArray);
-
-
-    function clearTable() {
-        let filteredDiv = document.querySelector(".Filtered");
-        while(filteredDiv.firstChild) {
-            filteredDiv.removeChild(filteredDiv.firstChild);
-        }
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('sortByName').addEventListener('click', function() {
-            clearTable();
-            naturalDisasterArray = nameFilter(naturalDisasterArray);
-            genTable(naturalDisasterArray);
-        });
     
-        document.getElementById('sortByDate').addEventListener('click', function () {
-            clearTable();
-            naturalDisasterArray = dateFilter(naturalDisasterArray); // Implement dateFilter
-            genTable(naturalDisasterArray);
-        });
-    
-        document.getElementById('sortByIntensity').addEventListener('click', function () {
-            clearTable();
-            naturalDisasterArray = intensityFilter(naturalDisasterArray);
-            genTable(naturalDisasterArray);
-        });
-    
-        document.getElementById('sortByType').addEventListener('click', function () {
-            clearTable();
-            naturalDisasterArray = typeFilter(naturalDisasterArray, /* type to filter by */);
-            genTable(naturalDisasterArray);
-        });
-    });
-
   })
   .catch((e) => console.error(e));
 
@@ -89,39 +58,47 @@ let date = [];
 let intensity = [];
 let type = [];
 
-let intensityFilterUsed = false;
 
 function intensityFilter(naturalDisasterArray) {
-  if (!intensityFilterUsed) {
-    for (let i = 0; i < naturalDisasterArray.length; i++) {
-      for (let j = i + 1; j < naturalDisasterArray.length; j++) {
-        if (
-          naturalDisasterArray[j].intensity < naturalDisasterArray[i].intensity
-        ) {
-          let temp = naturalDisasterArray[i];
-          naturalDisasterArray[i] = naturalDisasterArray[j];
-          naturalDisasterArray[j] = temp;
-        }
+  let swapped;
+  let temp;
+  for (let i = 0; i < naturalDisasterArray.length - 1; i++) {
+    swapped = false;
+    for (let j = 0; j < naturalDisasterArray.length - 1 - i; j++) {
+      if (naturalDisasterArray[j].intensity > naturalDisasterArray[j + 1].intensity) {
+        temp = naturalDisasterArray[j];
+        naturalDisasterArray[j] = naturalDisasterArray[j + 1];
+        naturalDisasterArray[j + 1] = temp;
+        swapped = true;
       }
     }
-    intensityFilterUsed = true;
-  } else {
-    for (let i = 0; i < naturalDisasterArray.length; i++) {
-      for (let j = i + 1; j < naturalDisasterArray.length; j++) {
-        if (
-          naturalDisasterArray[j].intensity > naturalDisasterArray[i].intensity
-        ) {
-          let temp = naturalDisasterArray[j];
-          naturalDisasterArray[j] = naturalDisasterArray[i];
-          naturalDisasterArray[i] = temp;
-        }
-      }
+    if (!swapped) {
+      break;
     }
-    intensityFilterUsed = false;
   }
   return naturalDisasterArray;
 }
 
+function intensityFilterReverse(naturalDisasterArray) {
+  let swapped;
+  let temp;
+  for (let i = 0; i < naturalDisasterArray.length - 1; i++) {
+    swapped = false;
+    for (let j = 0; j < naturalDisasterArray.length - 1 - i; j++) {
+      if (naturalDisasterArray[j].intensity < naturalDisasterArray[j + 1].intensity) {
+        temp = naturalDisasterArray[j];
+        naturalDisasterArray[j] = naturalDisasterArray[j + 1];
+        naturalDisasterArray[j + 1] = temp;
+        swapped = true;
+      }
+    }
+    if (!swapped) {
+      break;
+    }
+  }
+  return naturalDisasterArray;
+}
+   
 function typeFilter(naturalDisasterArray, filterByType) {
   let filteredByType = naturalDisasterArray.filter((disaster) =>
     disaster.type.includes(filterByType)
@@ -129,8 +106,30 @@ function typeFilter(naturalDisasterArray, filterByType) {
   return filteredByType;
 }
 
-function nameFilter(naturalDisasterArray) {
-  naturalDisasterArray.sort(function (a, b) {
+
+  function sortDatesDes(naturalDisasterArray) {
+    return naturalDisasterArray.sort(function (a,b) {
+      var dateA = a.date, dateB = b.date;
+      var newDateA = new Date(dateA);
+      var newDateB = new Date(dateB);
+
+      return newDateB - newDateA;
+    });
+}
+
+function sortDatesAcs(naturalDisasterArray) {
+  return naturalDisasterArray.sort(function (a,b) {
+    var dateA = a.date, dateB = b.date;
+    var newDateA = new Date(dateA);
+    var newDateB = new Date(dateB);
+
+    return newDateA - newDateB;
+  });
+}
+
+
+function nameFilterAZ() {
+  this.naturalDisasterArray.sort(function (a, b) {
     var nameA = a.name,
       nameB = b.name;
     if (nameA < nameB) {
@@ -140,34 +139,42 @@ function nameFilter(naturalDisasterArray) {
       return 1;
     }
     return 0;
-  });
-  return naturalDisasterArray;
-}
+  }); genTable(naturalDisasterArray);
+  return naturalDisasterArray;}
+
+  function nameFilterZA(naturalDisasterArray) {
+    naturalDisasterArray.sort(function (a, b) {
+      var nameA = a.name,
+        nameB = b.name;
+      if (nameA < nameB) {
+        return 1;
+      }
+      if (nameA > nameB) {
+        return -1;
+      }
+      return 0;
+    });
+    return naturalDisasterArray;}
+
 
 function genTable(naturalDisasterArray) {
-    let table = document.createElement("table");
+  let table = document.createElement("table");
+  let headerRow = table.insertRow();
 
-    // Create header row
-    let headerRow = table.insertRow();
-    let headerCells = ["Name", "Longitude", "Latitude", "Date", "Intensity", "Type"];
-    for (let headerCellText of headerCells) {
-        let headerCell = headerRow.insertCell();
-        let button = document.createElement("button");
-        button.className = "table-button";
-        button.textContent = headerCellText;
-        headerCell.appendChild(button);
+  // Create header cells based on the order of your data
+  for (let key in naturalDisasterArray[0]) {
+    let headerCell = headerRow.insertCell();
+    headerCell.textContent = key;
+  }
+
+  for (let row of naturalDisasterArray) {
+    let dataRow = table.insertRow();
+
+    for (let key in row) {
+      let newCell = dataRow.insertCell();
+      newCell.textContent = row[key];
     }
+  }
 
-    // Populate table with data rows
-    for (let row of naturalDisasterArray) {
-        let dataRow = table.insertRow();
-
-        for (let key in row) {
-            let newCell = dataRow.insertCell();
-            newCell.textContent = row[key];
-        }
-    }
-
-    document.body.querySelector(".Filtered").appendChild(table);
+  document.body.querySelector(".Filtered").appendChild(table);
 }
-

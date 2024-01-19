@@ -1,36 +1,37 @@
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>WEC APP</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natural Disasters Viewer</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
-    <div class="card">
-        <div class="search">
-            <input type="text" id="searchbar" placeholder="Search for the name of a natural disaster">
-
-            <button onclick="">
-                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1.3em"
-                    width="1.3em" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M10,18c1.846,0,3.543-0.635,4.897-1.688l4.396,4.396l1.414-1.414l-4.396-4.396C17.365,13.543,18,11.846,18,10 c0-4.411-3.589-8-8-8s-8,3.589-8,8S5.589,18,10,18z M10,4c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S6.691,4,10,4z">
-                    </path>
-                    <path
-                        d="M11.412,8.586C11.791,8.966,12,9.468,12,10h2c0-1.065-0.416-2.069-1.174-2.828c-1.514-1.512-4.139-1.512-5.652,0 l1.412,1.416C9.346,7.83,10.656,7.832,11.412,8.586z">
-                    </path>
-                </svg>
-            </button>
-        </div>
-
-        <div class="Filtered">
-
-        </div>
+    <div class="header">
+      <img src="./assets/Logo.png" alt="Logo" class="logo">
+      <h1>Western Engineering Competition</h1>
+      <img src="./assets/WEC.png" alt="WEC" class="wec-logo">
     </div>
-    <script src="data.js"></script>
-</body>
 
+    <div class="buttons">
+      <button onclick="genTable(intensityFilter())">Filter by Intensity</button>
+      <button onclick="intensityFilterReverse()">Filter by Intensity (Reverse)</button>
+      <button onclick="typeFilter('Type')">Filter by Type</button>
+      <button onclick="sortDatesDes()">Sort by Date (Descending)</button>
+      <button onclick="sortDatesAcs()">Sort by Date (Ascending)</button>
+      <button onclick="nameFilterAZ()">Sort by Name (A-Z)</button>
+      <button onclick="nameFilterZA()">Sort by Name (Z-A)</button>
+    </div>
+    <div class="card">
+
+      <div class="table-container">
+        <div class="Filtered"></div>
+      </div>
+    </div>
+  <script src="./data.js"></script>
+</body>
 </html>
+
+
