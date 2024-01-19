@@ -16,19 +16,23 @@
     </div>
 
     <div class="buttons">
-      <button onclick="genTable(intensityFilter())">Filter by Intensity</button>
-      <button onclick="intensityFilterReverse()">Filter by Intensity (Reverse)</button>
-      <button onclick="typeFilter('Type')">Filter by Type</button>
-      <button onclick="sortDatesDes()">Sort by Date (Descending)</button>
-      <button onclick="sortDatesAcs()">Sort by Date (Ascending)</button>
-      <button onclick="nameFilterAZ()">Sort by Name (A-Z)</button>
-      <button onclick="nameFilterZA()">Sort by Name (Z-A)</button>
+      <button onclick="activateIntensityFilter()">Filter by Intensity</button>
+      <button onclick="activateIntensityFilterReverse()">Filter by Intensity (Reverse)</button>
+      <button onclick="activateTypeFilter()">Filter by Type</button>
+      <button onclick="activateSortDatesDesc()">Sort by Date (Descending)</button>
+      <button onclick="activateSortDatesAsc()">Sort by Date (Ascending)</button>
+      <button onclick="activateNameFilterAZ()">Sort by Name (A-Z)</button>
+      <button onclick="activateNameFilterZA()">Sort by Name (Z-A)</button>
     </div>
-    <div class="card">
 
-      <div class="table-container">
-        <div class="Filtered"></div>
-      </div>
+    
+    <div class="card">
+        <div class="table-container">
+           
+              
+              <table class="Filtered">
+              </table>
+        </div>
     </div>
   <script src="./data.js"></script>
 </body>

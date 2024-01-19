@@ -1,4 +1,4 @@
-
+naturalDisasterArray = []; // Declare naturalDisasterArray as a global variable
 fetch("MOCK_DATA.csv")
   .then((res) => res.text())
   .then((text) => {
@@ -13,7 +13,6 @@ fetch("MOCK_DATA.csv")
       type.push(data[5]);
     }
 
-    let naturalDisasterArray = [];
     for (let i = 1; i < lineList.length - 1; i++) {
       let names = name[i];
       let longt = Number(long[i]);
@@ -34,9 +33,7 @@ fetch("MOCK_DATA.csv")
       let temp = new NaturalDisaster(names, longt, latt, dates, intensities, types);
       naturalDisasterArray.push(temp);
     }
-    console.log(this);
     genTable(naturalDisasterArray);
-    
   })
   .catch((e) => console.error(e));
 
@@ -59,7 +56,13 @@ let intensity = [];
 let type = [];
 
 
-function intensityFilter(naturalDisasterArray) {
+function activateIntensityFilter() {
+  let filteredData = intensityFilter();
+  genTable(filteredData);
+  // genTable(intensityFilter());
+}
+
+function intensityFilter() {
   let swapped;
   let temp;
   for (let i = 0; i < naturalDisasterArray.length - 1; i++) {
@@ -79,7 +82,11 @@ function intensityFilter(naturalDisasterArray) {
   return naturalDisasterArray;
 }
 
-function intensityFilterReverse(naturalDisasterArray) {
+function activateIntensityFilterReverse() {
+  genTable(intensityFilterReverse());
+}
+
+function intensityFilterReverse() {
   let swapped;
   let temp;
   for (let i = 0; i < naturalDisasterArray.length - 1; i++) {
@@ -98,16 +105,23 @@ function intensityFilterReverse(naturalDisasterArray) {
   }
   return naturalDisasterArray;
 }
-   
-function typeFilter(naturalDisasterArray, filterByType) {
+
+function activateTypeFilter() {
+  genTable(typeFilter("tornado"));
+}
+
+function typeFilter(filterByType) {
   let filteredByType = naturalDisasterArray.filter((disaster) =>
     disaster.type.includes(filterByType)
   );
   return filteredByType;
 }
 
+function activateSortDatesDesc() {
+  genTable(sortDatesDesc());
+}
 
-  function sortDatesDes(naturalDisasterArray) {
+  function sortDatesDesc() {
     return naturalDisasterArray.sort(function (a,b) {
       var dateA = a.date, dateB = b.date;
       var newDateA = new Date(dateA);
@@ -117,7 +131,11 @@ function typeFilter(naturalDisasterArray, filterByType) {
     });
 }
 
-function sortDatesAcs(naturalDisasterArray) {
+function activateSortDatesAsc() {
+  genTable(sortDatesAcs());
+}
+
+function sortDatesAcs() {
   return naturalDisasterArray.sort(function (a,b) {
     var dateA = a.date, dateB = b.date;
     var newDateA = new Date(dateA);
@@ -127,6 +145,9 @@ function sortDatesAcs(naturalDisasterArray) {
   });
 }
 
+function activateNameFilterAZ() {
+  genTable(nameFilterAZ());
+}
 
 function nameFilterAZ() {
   this.naturalDisasterArray.sort(function (a, b) {
@@ -139,10 +160,14 @@ function nameFilterAZ() {
       return 1;
     }
     return 0;
-  }); genTable(naturalDisasterArray);
+  });
   return naturalDisasterArray;}
 
-  function nameFilterZA(naturalDisasterArray) {
+  function activateNameFilterZA() {
+    genTable(nameFilterZA());
+  }
+
+  function nameFilterZA() {
     naturalDisasterArray.sort(function (a, b) {
       var nameA = a.name,
         nameB = b.name;
@@ -156,25 +181,33 @@ function nameFilterAZ() {
     });
     return naturalDisasterArray;}
 
+function genTable(filterCallbackFunction) {
+  
+  let container = document.body.querySelector(".Filtered");
 
-function genTable(naturalDisasterArray) {
-  let table = document.createElement("table");
-  let headerRow = table.insertRow();
-
-  // Create header cells based on the order of your data
-  for (let key in naturalDisasterArray[0]) {
-    let headerCell = headerRow.insertCell();
-    headerCell.textContent = key;
+  // Remove the existing table (if any)
+  let existingTable = container.querySelector("table");
+  if (existingTable) {
+    container.removeChild(existingTable);
   }
 
-  for (let row of naturalDisasterArray) {
-    let dataRow = table.insertRow();
-
-    for (let key in row) {
-      let newCell = dataRow.insertCell();
-      newCell.textContent = row[key];
+    let table = document.createElement("table");
+    let headerRow = table.insertRow();
+  
+    for (let key in naturalDisasterArray[0]) {
+      let headerCell = headerRow.insertCell();
+      headerCell.textContent = key;
+      headerCell.style.fontWeight = 'bold';
+      headerCell.style.textAlign = 'center';
     }
-  }
 
-  document.body.querySelector(".Filtered").appendChild(table);
-}
+    for (let row of filterCallbackFunction) {
+      let dataRow = table.insertRow();
+  
+      for (let key in row) {
+        let newCell = dataRow.insertCell();
+        newCell.textContent = row[key];
+      }
+    }
+    document.body.querySelector(".Filtered").appendChild(table);
+  }
