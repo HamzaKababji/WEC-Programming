@@ -16,9 +16,13 @@
     </div>
 
     <div class="buttons">
+      <button onClick="window.location.reload();">Reset</button>
       <button onclick="activateIntensityFilter()">Filter by Intensity</button>
       <button onclick="activateIntensityFilterReverse()">Filter by Intensity (Reverse)</button>
-      <button onclick="activateTypeFilter()">Filter by Type</button>
+      <button onclick="activateTypeFilterTornado()">Filter by Type (Tornado)</button>
+      <button onclick="activateTypeFilterEarthquake()">Filter by Type (Earthquake)</button>
+      <button onclick="activateTypeFilterflood()">Filter by Type (Flood)</button>
+      <button onclick="activateTypeFilterHurricane()">Filter by Type (Hurricane)</button>
       <button onclick="activateSortDatesDesc()">Sort by Date (Descending)</button>
       <button onclick="activateSortDatesAsc()">Sort by Date (Ascending)</button>
       <button onclick="activateNameFilterAZ()">Sort by Name (A-Z)</button>
@@ -28,8 +32,6 @@
     
     <div class="card">
         <div class="table-container">
-           
-              
               <table class="Filtered">
               </table>
         </div>

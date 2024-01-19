@@ -55,11 +55,9 @@ let date = [];
 let intensity = [];
 let type = [];
 
-
 function activateIntensityFilter() {
   let filteredData = intensityFilter();
   genTable(filteredData);
-  // genTable(intensityFilter());
 }
 
 function intensityFilter() {
@@ -106,8 +104,18 @@ function intensityFilterReverse() {
   return naturalDisasterArray;
 }
 
-function activateTypeFilter() {
+function activateTypeFilterTornado() {
   genTable(typeFilter("tornado"));
+}
+
+function activateTypeFilterHurricane() {
+  genTable(typeFilter("hurricane"));
+}
+function activateTypeFilterEarthquake() {
+  genTable(typeFilter("earthquake"));
+}
+function activateTypeFilterflood() {
+  genTable(typeFilter("flood"));
 }
 
 function typeFilter(filterByType) {
@@ -185,7 +193,6 @@ function genTable(filterCallbackFunction) {
   
   let container = document.body.querySelector(".Filtered");
 
-  // Remove the existing table (if any)
   let existingTable = container.querySelector("table");
   if (existingTable) {
     container.removeChild(existingTable);
