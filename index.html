@@ -16,17 +16,35 @@
     </div>
 
     <div class="buttons">
+
       <button onClick="window.location.reload();">Reset</button>
-      <button onclick="activateIntensityFilter()">Filter by Intensity</button>
-      <button onclick="activateIntensityFilterReverse()">Filter by Intensity (Reverse)</button>
-      <button onclick="activateTypeFilterTornado()">Filter by Type (Tornado)</button>
-      <button onclick="activateTypeFilterEarthquake()">Filter by Type (Earthquake)</button>
-      <button onclick="activateTypeFilterflood()">Filter by Type (Flood)</button>
-      <button onclick="activateTypeFilterHurricane()">Filter by Type (Hurricane)</button>
-      <button onclick="activateSortDatesDesc()">Sort by Date (Descending)</button>
-      <button onclick="activateSortDatesAsc()">Sort by Date (Ascending)</button>
-      <button onclick="activateNameFilterAZ()">Sort by Name (A-Z)</button>
-      <button onclick="activateNameFilterZA()">Sort by Name (Z-A)</button>
+
+      <select name="filter-int" id="filter-int" style="height: 42px;" onchange="dropMenu1(this)"> 
+        <option> Filter By Intensity</option>
+        <option value="Low">Low to High</option> 
+        <option value="High">High to Low</option> 
+      </select>
+
+      <select name="filter-type" id="filter-type" style="height: 42px" onchange="dropMenu2(this)"> 
+        <option> Filter By Type</option>
+        <option value="Tor">Tornado</option> 
+        <option value="Earth">Earthquake</option>
+        <option value="Flood">Flood</option>
+        <option value="Hurricane">Hurricane</option> 
+      </select>
+
+      <select name="filter-date" id="filter-date" style="height: 42px" onchange="dropMenu3(this)"> 
+        <option> Filter By Date</option>
+        <option value="Rec">Most Recent</option> 
+        <option value="Earl">Earliest</option>
+      </select>
+
+      <select name="filter-name" id="filter-name" style="height: 42px" onchange="dropMenu4(this)"> 
+        <option> Filter By Names </option>
+        <option value="Asc">A-Z</option> 
+        <option value="Desc">Z-A</option>
+      </select>
+
     </div>
 
     

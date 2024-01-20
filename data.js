@@ -55,10 +55,6 @@ let date = [];
 let intensity = [];
 let type = [];
 
-function activateIntensityFilter() {
-  let filteredData = intensityFilter();
-  genTable(filteredData);
-}
 
 function intensityFilter() {
   let swapped;
@@ -80,9 +76,6 @@ function intensityFilter() {
   return naturalDisasterArray;
 }
 
-function activateIntensityFilterReverse() {
-  genTable(intensityFilterReverse());
-}
 
 function intensityFilterReverse() {
   let swapped;
@@ -104,20 +97,6 @@ function intensityFilterReverse() {
   return naturalDisasterArray;
 }
 
-function activateTypeFilterTornado() {
-  genTable(typeFilter("tornado"));
-}
-
-function activateTypeFilterHurricane() {
-  genTable(typeFilter("hurricane"));
-}
-function activateTypeFilterEarthquake() {
-  genTable(typeFilter("earthquake"));
-}
-function activateTypeFilterflood() {
-  genTable(typeFilter("flood"));
-}
-
 function typeFilter(filterByType) {
   let filteredByType = naturalDisasterArray.filter((disaster) =>
     disaster.type.includes(filterByType)
@@ -125,11 +104,8 @@ function typeFilter(filterByType) {
   return filteredByType;
 }
 
-function activateSortDatesDesc() {
-  genTable(sortDatesDesc());
-}
 
-  function sortDatesDesc() {
+function sortDatesDesc() {
     return naturalDisasterArray.sort(function (a,b) {
       var dateA = a.date, dateB = b.date;
       var newDateA = new Date(dateA);
@@ -139,9 +115,6 @@ function activateSortDatesDesc() {
     });
 }
 
-function activateSortDatesAsc() {
-  genTable(sortDatesAcs());
-}
 
 function sortDatesAcs() {
   return naturalDisasterArray.sort(function (a,b) {
@@ -153,9 +126,6 @@ function sortDatesAcs() {
   });
 }
 
-function activateNameFilterAZ() {
-  genTable(nameFilterAZ());
-}
 
 function nameFilterAZ() {
   this.naturalDisasterArray.sort(function (a, b) {
@@ -171,10 +141,6 @@ function nameFilterAZ() {
   });
   return naturalDisasterArray;}
 
-  function activateNameFilterZA() {
-    genTable(nameFilterZA());
-  }
-
   function nameFilterZA() {
     naturalDisasterArray.sort(function (a, b) {
       var nameA = a.name,
@@ -188,6 +154,63 @@ function nameFilterAZ() {
       return 0;
     });
     return naturalDisasterArray;}
+
+
+function dropMenu1(list1){
+
+  if (list1.value == 'Low')
+  {
+    genTable(intensityFilter());;
+  }
+  else if(list1.value == 'High')
+  {
+    genTable(intensityFilterReverse());
+  }
+}
+
+function dropMenu2(list2){
+
+  if (list2.value == 'Tor')
+  {
+    genTable(typeFilter("tornado"));
+  }
+  else if(list2.value == 'Earth')
+  {
+    genTable(typeFilter("earthquake"));
+  }
+  else if(list2.value =='Flood')
+  {
+    genTable(typeFilter("flood"))
+  }
+  else if(list2.value =='Hurricane')
+  {
+    genTable(typeFilter("hurricane"))
+  }
+}
+
+function dropMenu3(list3){
+
+  if (list3.value == 'Rec')
+  {
+    genTable(sortDatesDesc());
+  }
+  else if(list3.value == 'Earl')
+  {
+    genTable(sortDatesAcs());
+  }
+}
+
+function dropMenu4(list4){
+
+  if (list4.value == 'Asc')
+  {
+    genTable(nameFilterAZ());
+  }
+  else if(list4.value == 'Desc')
+  {
+    genTable(nameFilterZA());
+  }
+}
 
 function genTable(filterCallbackFunction) {
   
